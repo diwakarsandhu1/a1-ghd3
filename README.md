@@ -3,7 +3,7 @@ Assignment 1 - Hello World: GitHub and d3 (PacMan)
 
 Live Demo
 ---
-There is a live demo link through GitHub Pages to view the visualization. [View Visualization Here!] (https://diwakarsandhu1.github.io/a1-ghd3/)
+There is a live demo link through GitHub Pages to view the visualization. [View Visualization Here!](https://diwakarsandhu1.github.io/a1-ghd3/)
 
 Description
 ---
