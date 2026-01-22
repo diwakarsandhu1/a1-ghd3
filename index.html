@@ -1,13 +1,87 @@
 <!DOCTYPE html>
-<div id="container"></div>
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script type="module">
+<html lang="en">
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
-</script>
+  /**
+  * TODO:
+  * Make entire background black / dynamic to window size
+  * Add Pacman mouth and make him eat
+  * Add blue border on top and bottom
+  * README
+  **/ 
+
+  <head>
+      <meta charset="UTF-8">
+      <title>A1: Hello World! d3</title>
+      <script src="https://d3js.org/d3.v7.min.js"></script>
+  </head>
+
+  <body>
+    <script>
+      console.log(d3); // test if d3 is loaded
+
+      const width = 800;
+      const height = 500;
+
+      // Create SVG Canvas
+      const svg = d3.select("body")
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", height)
+                    .style("background-color", "black");
+
+      // Draw Pellets
+      const pellets = [];
+
+      function drawPellet(x, y, r, color) {
+        const circle = svg.append("circle")
+           .attr("cx", x)
+           .attr("cy", y)
+           .attr("r", r)
+           .attr("fill", color);
+
+        pellets.push({x: x, y: y, element: circle});
+      }
+
+      // Move Pellets
+      function movePellets () {
+          pellets.forEach(pellet => {
+            pellet.x -= 2;
+            pellet.element.attr("cx", pellet.x);
+          });
+      }
+
+      // Remove Eaten Pellets
+      function removeEatenPellets() {
+          for (let i = pellets.length - 1; i >= 0; i--) {
+            if (pellets[i].x < width / 4) {
+              pellets[i].element.remove();
+              pellets.splice(i, 1);
+            }
+          }
+      }
+
+      // Pellet Spawning/Moving/Removing Timer
+      let lastSpawnTime = 0;
+      const spawnInterval = 1000;
+
+      const t = d3.timer(function(elapsed) {
+        // Draw a pellet every 1 second
+        if (elapsed - lastSpawnTime > spawnInterval) {
+          drawPellet(width * 1.1 , height / 2, 10, "white");
+          lastSpawnTime = elapsed;
+        }
+        movePellets();
+        removeEatenPellets();
+      });
+
+      // Draw Pacman
+      const pacman = svg.append("circle")
+                        .attr("cx", width / 4)
+                        .attr("cy", height / 2)
+                        .attr("r", 50)
+                        .attr("fill", "#FFFF00");
+      
+      
+    </script>
+  </body>
+</html>
