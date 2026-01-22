@@ -3,7 +3,7 @@ Assignment 1 - Hello World: GitHub and d3 (PacMan)
 
 Live Demo
 ---
-There is a live demo link through GitHub Pages to view the visualization.
+There is a live demo link through GitHub Pages to view the visualization. [View Visualization Here!] (https://diwakarsandhu1.github.io/a1-ghd3/)
 
 Description
 ---
@@ -15,3 +15,4 @@ To build this visualization I utilized the d3 Documentation from https://d3js.or
 
 Screenshots
 ---
+<img width="866" height="367" alt="Screenshot 2026-01-22 at 6 33 58 PM" src="https://github.com/user-attachments/assets/47610385-eb58-4bed-ad03-a43cd57e84c1" />
