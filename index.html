@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  /**
-  * TODO:
-  * Make entire background black / dynamic to window size
-  * Add Pacman mouth and make him eat
-  * Add blue border on top and bottom
-  * README
-  **/ 
-
   <head>
       <meta charset="UTF-8">
       <title>A1: Hello World! d3</title>
       <script src="https://d3js.org/d3.v7.min.js"></script>
+      <style>
+        body {
+          background-color: black;
+          display: flex;
+          justify-content: center;
+        }
+      </style>
   </head>
 
   <body>
@@ -53,12 +52,29 @@
       // Remove Eaten Pellets
       function removeEatenPellets() {
           for (let i = pellets.length - 1; i >= 0; i--) {
-            if (pellets[i].x < width / 4) {
+            if (pellets[i].x < width * 0.37) {
               pellets[i].element.remove();
               pellets.splice(i, 1);
             }
           }
       }
+
+      // Draw Pacman
+      const pacman = svg.append("circle")
+                        .attr("cx", width / 4)
+                        .attr("cy", height / 2)
+                        .attr("r", 80)
+                        .attr("fill", "#FFFF00");
+      
+      const pacmanMouth = svg.append("path")
+                        .attr("d", d3.arc()({
+                          innerRadius: 0,
+                          outerRadius: 80,
+                          startAngle: Math.PI / 1.5,
+                          endAngle: Math.PI / 3
+                        }))
+                        .attr("transform", `translate(${width * 0.26}, ${height / 2})`)
+                        .attr("fill", "black");
 
       // Pellet Spawning/Moving/Removing Timer
       let lastSpawnTime = 0;
@@ -74,12 +90,42 @@
         removeEatenPellets();
       });
 
-      // Draw Pacman
-      const pacman = svg.append("circle")
-                        .attr("cx", width / 4)
-                        .attr("cy", height / 2)
-                        .attr("r", 50)
-                        .attr("fill", "#FFFF00");
+
+      // Pacman Eating Animation
+      let mouthOpen = true;
+      d3.interval(() => {
+        if (mouthOpen) {
+          pacmanMouth.attr("d", d3.arc()({
+            innerRadius: 0,
+            outerRadius: 80,
+            startAngle: Math.PI / 1.5,
+            endAngle: Math.PI / 3
+          }));
+        } else {
+          pacmanMouth.attr("d", d3.arc()({
+            innerRadius: 0,
+            outerRadius: 80,
+            startAngle: Math.PI,
+            endAngle: Math.PI
+          }));
+        }
+        mouthOpen = !mouthOpen;
+      }, 600);
+
+      // Draw Borders
+      svg.append("rect")
+         .attr("x", 0)
+         .attr("y", height * 0.25)
+         .attr("width", width)
+         .attr("height", 20)
+         .attr("fill", "blue");
+
+      svg.append("rect")
+          .attr("x", 0)
+          .attr("y", height * 0.75)
+          .attr("width", width)
+          .attr("height", 20)
+          .attr("fill", "blue");
       
       
     </script>
